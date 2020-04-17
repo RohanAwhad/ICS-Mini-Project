@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
+from flask import Flask, render_template, request, redirect, jsonify
+import json
 import random
+
+app = Flask(__name__)
 
 def one_time_pad(length):
 	chars = [chr(i) for i in range(ord('a'), ord('z')+1)]
@@ -75,7 +79,7 @@ def get_position(pair, matrix):
 
 	return (a_pos, b_pos)
 		
-def encrypt(pos, matirx):
+def encrypt(pos, matrix):
 	ciphertext = []
 	# same row
 	if pos[0][0] == pos[1][0]:
@@ -110,7 +114,58 @@ def decrypt(pos, matrix):
 	return plaintext
 
 
+def algo(message):
+	keyword = one_time_pad(len(message))
+	
+	print('\n', '#'*50, '\n')
+	print(' KEYWORD: ', keyword)
+
+	#Encryption
+	pairs = get_pairs(message)
+	print(' No. of pairs: ', len(pairs))
+	key = keyword
+	ciphertext = ''
+	print('*'*10, 'MATRICES', '*'*10)
+	for pair in pairs:
+		matrix = create_matrix(key)
+		pos = get_position(pair, matrix)
+		ciphertext += encrypt(pos, matrix)
+		key = rail_transformation(key)
+		print(matrix)
+
+	# Decryption
+	pairs = get_pairs(ciphertext)
+	key = keyword
+	plaintext = ''
+	for pair in pairs:
+		matrix = create_matrix(key)
+		pos = get_position(pair, matrix)
+		plaintext += decrypt(pos, matrix)
+		key = rail_transformation(key)
+	
+	print('\n', '#'*50, '\n')
+
+	return (ciphertext, plaintext)
+
+
+@app.route('/shivdeep', methods=['POST', 'GET'])
+@app.route('/rohan', methods=['POST', 'GET'])
+def rohan():
+	if request.method == 'POST':
+		message = ''.join(i for i in request.form['sent-msg'].lower().split(' '))
+		print(message)
+		ciphertext, plaintext = algo(message)
+		ret = '{ "ciphertext" : "' + ciphertext + '", "plaintext" : "' + plaintext +'" }'
+	return jsonify(ret)
+	
+@app.route('/')
+def home():
+	return render_template('home.html')
+
 if __name__ == '__main__':
+	app.run(debug=True)
+
+	'''
 	message = ''.join(i for i in input('Enter message: ').lower().split(' '))
 	print("Original Message: ", message)
 
@@ -138,4 +193,4 @@ if __name__ == '__main__':
 	print('Decrypted Message: ', plaintext)
 
 	print('Is original message equal to decrypted message? ', message==plaintext)
-
+	'''

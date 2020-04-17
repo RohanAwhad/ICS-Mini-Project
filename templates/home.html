@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- metadata goes here -->
+		<link type='text/css' rel='stylesheet' href="{{ url_for('static', filename='css/bootstrap.css') }}">
+		<title>
+			ICS Mini Project
+		</title>
+	</head>
+	<body>
+		<!-- data goes here -->
+		<div class='container mt-5'>
+			<div class='row'>
+				<div class='col mx-5'>
+					<p class='display-4'>Rohan</p>
+					<form id='rohan' action='/algo' method='POST'>
+						<div class='form-group'>
+							<label for='sent-msg-rohan'>Your Message</label>
+							<input id='sent-msg-rohan' type='text' class='form-control' name='sent-msg' placeholder='Enter your message here'>
+							<button class='btn btn-primary mt-2'>Send</button>
+						</div>
+						
+						<div class='form-group'>
+							<label for='encrypted-msg-rohan'>Encrypted Message</label>
+							<input id='encrypted-msg-rohan' type='text' class='form-control' name='encrypted-msg' readonly placeholder='Encrypted message for Shivdeep'>
+						</div>
+						
+						<div class='form-group'>
+							<label for='received-msg-rohan'>Received Message</label>
+							<input id='received-msg-rohan' type='text' class='form-control' name='received-msg' readonly placeholder='Received message from Shivdeep'>
+						</div>
+						
+						<div class='form-group'>
+							<label for='decrypted-msg-rohan'>Decrypted Message</label>
+							<input id='decrypted-msg-rohan' type='text' class='form-control' name='decrypted-msg' readonly placeholder='Decrypted message from Shivdeep'>
+						</div>
+						
+					</form>
+				</div>
+				<div class='col mx-5'>
+					<p class='display-4'>Shivdeep</p>
+					<form id='shivdeep' action='/algo' method='POST'>
+						<div class='form-group'>
+							<label for='sent-msg-shivdeep'>Your Message</label>
+							<input id='sent-msg-shivdeep' type='text' class='form-control' name='sent-msg' placeholder='Enter your message here'>
+							<button class='btn btn-primary mt-2'>Send</button>
+						</div>
+						
+						<div class='form-group'>
+							<label for='encrypted-msg-shivdeep'>Encrypted Message</label>
+							<input id='encrypted-msg-shivdeep' type='text' class='form-control' name='encrypted-msg' readonly placeholder='Encrypted message for Rohan'>
+						</div>
+						
+						<div class='form-group'>
+							<label for='received-msg-shivdeep'>Received Message</label>
+							<input id='received-msg-shivdeep' type='text' class='form-control' name='received-msg' readonly placeholder='Received message from Rohan'>
+						</div>
+						
+						<div class='form-group'>
+							<label for='decrypted-msg-shivdeep'>Decrypted Message</label>
+							<input id='decrypted-msg-shivdeep' type='text' class='form-control' name='decrypted-msg' readonly placeholder='Decrypted message from Rohan'>
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- JS files-->
+			<script src='static/jquery/jquery-3.5.0.js'></script>
+			<script src='static/popper/popper.min.js'></script>
+			<script src='static/js/bootstrap.js'></script>
+			<script src='static/ajax.js'></script>
+		<!-- JS end-->
+
+	</body>
+</html>
